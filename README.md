@@ -82,7 +82,7 @@ To improve the model's generalization and prevent overfitting, we used extensive
 - **Loss Function**: Categorical Crossentropy
 - **Optimizer**: Adam with a learning rate of `1e-3`.
 
-  ![image](https://github.com/user-attachments/assets/48417835-ceb2-45ac-aa33-6fc8c8439ca6)
+ <img width="328" alt="image" src="https://github.com/user-attachments/assets/ee300a0b-9f18-46a4-ae7c-eb10456651fc" />     <img width="327" alt="image" src="https://github.com/user-attachments/assets/9b70f187-512e-45d3-8a8f-1479fd890eb8" />
 
 
 ---
@@ -134,12 +134,18 @@ The Vision Transformer (ViT) model leverages the power of transformers for image
 4. **Classification Head**:
    - Global Average Pooling followed by dense layers.
    - Output layer with 10 neurons and **softmax** activation.
+  
+     ![image](https://github.com/user-attachments/assets/e00deaec-9ea5-4d11-b527-265bf204ab0e)
+
 
 #### Metrics
 - **Training Accuracy**: 98.0%
 - **Validation Accuracy**: 98.0%
 - **Loss Function**: Categorical Crossentropy
 - **Optimizer**: Adam with a learning rate of `1e-4`.
+
+![image](https://github.com/user-attachments/assets/096a847f-180a-449b-bdc2-3a7c22159309)    ![image](https://github.com/user-attachments/assets/d6d87b0e-c6af-4b14-a96f-44a5528b2366)
+
 
 ---
 
