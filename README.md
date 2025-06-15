@@ -1,6 +1,6 @@
 # Distracted Driver Detection Using Deep Learning
 
-This repository provides a comprehensive solution for detecting distracted driving behaviors using deep learning. The project focuses on three primary models: a **Custom CNN**, a **Hybrid CNN+ViT+BiLSTM**, and a **Vision Transformer (ViT)**. Each model is designed to address specific challenges in image classification, and their performance is evaluated using various metrics. Additionally, Grad-CAM heatmaps are employed for explainability.
+This repository provides a comprehensive solution for detecting distracted driving behaviors using deep learning. The project focuses on three primary models: a **Custom CNN**, a **Hybrid CNN+ViT+BiLSTM**, and a **Vision Transformer (ViT)**. Additionally, an **Ensemble Model (CNN+Transformer+BiLSTM)** is implemented to combine the strengths of these architectures. Each model is evaluated using various metrics, including per-class precision, recall, and F1-score. Grad-CAM heatmaps and t-SNE visualizations are employed for explainability and feature analysis.
 
 ---
 
@@ -11,10 +11,10 @@ This repository provides a comprehensive solution for detecting distracted drivi
   - [Custom CNN Architecture](#custom-cnn-architecture)
   - [Hybrid CNN+ViT+BiLSTM Model](#hybrid-cnnvitbilstm-model)
   - [Vision Transformer (ViT) Model](#vision-transformer-vit-model)
-- [Explainability with Grad-CAM](#explainability-with-grad-cam)
+  - [Ensemble Model (CNN+Transformer+BiLSTM)](#ensemble-model-cnntransformerbilstm)
+- [Explainability and Interpretability](#explainability-and-interpretability)
 - [Training and Evaluation](#training-and-evaluation)
 - [Results](#results)
-- [How to Use](#how-to-use)
 - [Future Work](#future-work)
 - [Acknowledgments](#acknowledgments)
 
@@ -40,6 +40,9 @@ The dataset used is the **State Farm Distracted Driver Detection Dataset**, whic
 - **c8**: Hair and makeup
 - **c9**: Talking to passenger
 
+### Class-Wise Distribution
+The dataset is imbalanced, with some classes having more samples than others. To address this, we used data augmentation techniques to balance the dataset and improve model generalization.
+
 ---
 
 ## Models
@@ -60,14 +63,18 @@ The Custom CNN model was designed from scratch to efficiently classify images in
    - Dense layer with 128 neurons and **ReLU** activation.
    - Output layer with 10 neurons and **softmax** activation for multi-class classification.
 
-#### Design Rationale
-- **ReLU Activation**: Chosen for its simplicity and efficiency in training deep networks.
-- **Softmax Output**: Ensures probabilities sum to 1, making it suitable for multi-class classification.
-- **MaxPooling**: Reduces overfitting by down-sampling feature maps.
+#### Data Augmentation
+To improve the model's generalization and prevent overfitting, we used extensive data augmentation techniques with `ImageDataGenerator`:
+- **Horizontal Flip**
+- **Vertical Flip**
+- **Rotation**
+- **Zoom**
+- **Shear**
+- **Brightness Adjustment**
 
 #### Metrics
-- **Training Accuracy**: 85.4%
-- **Validation Accuracy**: 83.7%
+- **Training Accuracy**: 97.1%
+- **Validation Accuracy**: 97.2%
 - **Loss Function**: Categorical Crossentropy
 - **Optimizer**: Adam with a learning rate of `1e-3`.
 
@@ -93,12 +100,6 @@ This hybrid model combines the strengths of CNNs, Vision Transformers (ViTs), an
 5. **Output Layer**:
    - Dense layer with 10 neurons and **softmax** activation.
 
-#### Design Rationale
-- **CNN**: Extracts spatial features from images.
-- **ViT**: Captures global dependencies using self-attention.
-- **BiLSTM**: Models temporal relationships in sequential data.
-- **Dropout**: Prevents overfitting by randomly deactivating neurons during training.
-
 #### Metrics
 - **Training Accuracy**: 91.2%
 - **Validation Accuracy**: 89.8%
@@ -110,52 +111,83 @@ This hybrid model combines the strengths of CNNs, Vision Transformers (ViTs), an
 ### Vision Transformer (ViT) Model
 
 #### Overview
-The ViT model leverages the power of transformers for image classification. It divides images into patches and processes them as sequences, similar to natural language processing tasks.
+The Vision Transformer (ViT) model leverages the power of transformers for image classification. It divides images into patches and processes them as sequences, similar to natural language processing tasks.
 
 #### Architecture
-1. **Patch Extraction**:
-   - Images are divided into patches of size `(8, 8)`.
-2. **Patch Embedding**:
-   - Dense layer to project patches into a higher-dimensional space.
-   - Positional embeddings added to retain spatial information.
-3. **Transformer Encoder**:
-   - Two transformer blocks with multi-head self-attention and feed-forward layers.
+1. **Patch Layer**:
+   - Divides the input image into smaller patches of size `(8, 8)`.
+   - Each patch is flattened into a 1D vector.
+2. **Patch Encoder**:
+   - Projects patches into a higher-dimensional space using a dense layer.
+   - Adds positional embeddings to retain spatial information.
+3. **Transformer Block**:
+   - **Multi-Head Self-Attention**: Captures global dependencies by computing attention scores between all patches.
+   - **Feed-Forward Network**: Fully connected layers applied to each token independently.
+   - **Skip Connections**: Stabilizes training and prevents vanishing gradients.
 4. **Classification Head**:
    - Global Average Pooling followed by dense layers.
    - Output layer with 10 neurons and **softmax** activation.
 
-#### Design Rationale
-- **Attention Mechanism**: Captures global dependencies in the image.
-- **Positional Embeddings**: Retain spatial information lost during patch extraction.
-- **Softmax Output**: Ensures probabilities sum to 1.
-
 #### Metrics
-- **Training Accuracy**: 89.7%
-- **Validation Accuracy**: 88.5%
+- **Training Accuracy**: 98.0%
+- **Validation Accuracy**: 98.0%
 - **Loss Function**: Categorical Crossentropy
 - **Optimizer**: Adam with a learning rate of `1e-4`.
 
 ---
 
-## Explainability with Grad-CAM
+### Ensemble Model (CNN+Transformer+BiLSTM)
 
-To ensure transparency and interpretability, Grad-CAM (Gradient-weighted Class Activation Mapping) was used to visualize the regions of the image that influenced the model's predictions.
+#### Overview
+The ensemble model combines the strengths of CNNs, Transformers, and BiLSTMs to achieve robust performance. It integrates spatial, temporal, and global features for improved classification.
 
-### Steps
-1. **Gradient Computation**:
-   - Gradients of the target class are computed with respect to the feature maps of the last convolutional layer.
-2. **Heatmap Generation**:
-   - Feature maps are weighted by the gradients and combined to create a heatmap.
-3. **Overlay**:
-   - The heatmap is superimposed on the original image for visualization.
+#### Data Augmentation
+We used the same data augmentation techniques as the other models:
+- **Horizontal Flip**
+- **Vertical Flip**
+- **Rotation**
+- **Zoom**
+- **Shear**
+- **Brightness Adjustment**
 
-### Tools
-- **Matplotlib**: For plotting heatmaps.
-- **OpenCV**: For resizing and overlaying heatmaps.
+#### Architecture
+1. **CNN Block**:
+   - Extracts spatial features from the input image.
+2. **Transformer Block**:
+   - Captures global dependencies using multi-head self-attention.
+3. **BiLSTM Block**:
+   - Models temporal relationships in sequential data.
+4. **Fusion**:
+   - Outputs from the CNN, Transformer, and BiLSTM blocks are concatenated.
+   - Global Average Pooling followed by dense layers.
+5. **Output Layer**:
+   - Dense layer with 10 neurons and **softmax** activation.
 
-### Results
-- Provided insights into the model's focus areas.
-- Helped identify potential biases or errors in predictions.
+#### Metrics
+- **Training Accuracy**: 93.0%
+- **Validation Accuracy**: 93.0%
+- **Loss Function**: Categorical Crossentropy
+- **Optimizer**: Adam with a learning rate scheduler for dynamic adjustment.
+
+---
+
+## Explainability and Interpretability
+
+### Grad-CAM Heatmaps
+Grad-CAM (Gradient-weighted Class Activation Mapping) was used to visualize the regions of the image that influenced the model's predictions.
+
+#### Why Grad-CAM?
+- Provides insights into the model's decision-making process.
+- Helps identify potential biases or errors in predictions.
+- Improves trust and transparency in AI systems.
+
+#### Steps
+1. Compute gradients of the target class with respect to the feature maps of the last convolutional layer.
+2. Weight the feature maps by the gradients and combine them to create a heatmap.
+3. Overlay the heatmap on the original image for visualization.
+
+### t-SNE Visualization
+t-SNE (t-Distributed Stochastic Neighbor Embedding) was used to visualize the high-dimensional validation features in a 2D space. This helped analyze the feature separability between classes.
 
 ---
 
@@ -164,12 +196,11 @@ To ensure transparency and interpretability, Grad-CAM (Gradient-weighted Class A
 ### Training
 - **Batch Size**: 32
 - **Epochs**: 30
-- **Data Augmentation**:
-  - Horizontal flip, rotation, zoom, and shear transformations.
+- **Learning Rate Scheduler**: Dynamically adjusted the learning rate during training.
 
 ### Evaluation Metrics
 - Accuracy
-- Precision, Recall, and F1-Score
+- Precision, Recall, and F1-Score (per class)
 - Confusion Matrix
 
 ---
@@ -178,9 +209,10 @@ To ensure transparency and interpretability, Grad-CAM (Gradient-weighted Class A
 
 | Model                  | Training Accuracy | Validation Accuracy | Precision | Recall | F1-Score |
 |------------------------|-------------------|---------------------|-----------|--------|----------|
-| Custom CNN             | 85.4%            | 83.7%              | 84.7%     | 85.2%  | 84.9%    |
+| Custom CNN             | 97.1%            | 97.2%              | 97.0%     | 97.3%  | 97.1%    |
 | Hybrid CNN+ViT+BiLSTM  | 91.2%            | 89.8%              | 90.8%     | 91.0%  | 90.9%    |
-| Vision Transformer (ViT) | 89.7%          | 88.5%              | 89.2%     | 89.5%  | 89.3%    |
+| Vision Transformer (ViT) | 98.0%          | 98.0%              | 98.1%     | 98.0%  | 98.0%    |
+| Ensemble Model         | 93.0%            | 93.0%              | 93.2%     | 93.1%  | 93.1%    |
 
 ---
 
@@ -197,5 +229,3 @@ To ensure transparency and interpretability, Grad-CAM (Gradient-weighted Class A
 - **State Farm** for providing the dataset.
 - **TensorFlow** and **Keras** for the deep learning frameworks.
 - **OpenCV** and **Matplotlib** for visualization tools.
-
----
