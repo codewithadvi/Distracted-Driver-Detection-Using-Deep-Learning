@@ -43,6 +43,10 @@ The dataset used is the **State Farm Distracted Driver Detection Dataset**, whic
 ### Class-Wise Distribution
 The dataset is imbalanced, with some classes having more samples than others. To address this, we used data augmentation techniques to balance the dataset and improve model generalization.
 
+![image](https://github.com/user-attachments/assets/e585b371-3cc5-4936-bc9b-bd2c3246f5cb)
+
+![image](https://github.com/user-attachments/assets/806c08ab-2991-4ed6-b049-b4308af7deab)
+
 ---
 
 ## Models
@@ -77,6 +81,9 @@ To improve the model's generalization and prevent overfitting, we used extensive
 - **Validation Accuracy**: 97.2%
 - **Loss Function**: Categorical Crossentropy
 - **Optimizer**: Adam with a learning rate of `1e-3`.
+
+  ![image](https://github.com/user-attachments/assets/48417835-ceb2-45ac-aa33-6fc8c8439ca6)
+
 
 ---
 
