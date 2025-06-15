@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/6b5021fa-02bb-4ec5-810e-09b77bbf04bb)# Distracted Driver Detection Using Deep Learning
+# Distracted Driver Detection Using Deep Learning
 
 This repository provides a comprehensive solution for detecting distracted driving behaviors using deep learning. The project focuses on three primary models: a **Custom CNN**, a **Hybrid CNN+ViT+BiLSTM**, and a **Vision Transformer (ViT)**. Additionally, an **Ensemble Model (CNN+Transformer+BiLSTM)** is implemented to combine the strengths of these architectures. Each model is evaluated using various metrics, including per-class precision, recall, and F1-score. Grad-CAM heatmaps and t-SNE visualizations are employed for explainability and feature analysis.
 
