@@ -1,4 +1,4 @@
-# Distracted Driver Detection Using Deep Learning
+![image](https://github.com/user-attachments/assets/6b5021fa-02bb-4ec5-810e-09b77bbf04bb)# Distracted Driver Detection Using Deep Learning
 
 This repository provides a comprehensive solution for detecting distracted driving behaviors using deep learning. The project focuses on three primary models: a **Custom CNN**, a **Hybrid CNN+ViT+BiLSTM**, and a **Vision Transformer (ViT)**. Additionally, an **Ensemble Model (CNN+Transformer+BiLSTM)** is implemented to combine the strengths of these architectures. Each model is evaluated using various metrics, including per-class precision, recall, and F1-score. Grad-CAM heatmaps and t-SNE visualizations are employed for explainability and feature analysis.
 
@@ -179,8 +179,13 @@ We used the same data augmentation techniques as the other models:
 #### Metrics
 - **Training Accuracy**: 93.0%
 - **Validation Accuracy**: 93.0%
+  ![image](https://github.com/user-attachments/assets/41e8ea2a-77ec-4717-b022-8f2d16be3906)   ![image](https://github.com/user-attachments/assets/82eda1e1-0792-4517-9b3a-9ec786eed979)
 - **Loss Function**: Categorical Crossentropy
 - **Optimizer**: Adam with a learning rate scheduler for dynamic adjustment.
+
+![image](https://github.com/user-attachments/assets/8b284bb7-62b4-470d-8eea-2737115d5f6c)
+
+![image](https://github.com/user-attachments/assets/e734eb6f-f555-455a-87f2-f7759d56bacb)
 
 ---
 
@@ -189,10 +194,15 @@ We used the same data augmentation techniques as the other models:
 ### Grad-CAM Heatmaps
 Grad-CAM (Gradient-weighted Class Activation Mapping) was used to visualize the regions of the image that influenced the model's predictions.
 
+![image](https://github.com/user-attachments/assets/899cb57c-fa73-4020-bb85-47964b014975)
+
+
 #### Why Grad-CAM?
 - Provides insights into the model's decision-making process.
 - Helps identify potential biases or errors in predictions.
 - Improves trust and transparency in AI systems.
+
+![image](https://github.com/user-attachments/assets/b7c1a235-33ac-4a20-af35-a5a83884b438) ![image](https://github.com/user-attachments/assets/24fa65db-650e-44c6-a54e-6932854525d5)
 
 #### Steps
 1. Compute gradients of the target class with respect to the feature maps of the last convolutional layer.
@@ -201,6 +211,9 @@ Grad-CAM (Gradient-weighted Class Activation Mapping) was used to visualize the 
 
 ### t-SNE Visualization
 t-SNE (t-Distributed Stochastic Neighbor Embedding) was used to visualize the high-dimensional validation features in a 2D space. This helped analyze the feature separability between classes.
+
+![image](https://github.com/user-attachments/assets/392846e3-51ff-4208-b170-131fdc2b563d)
+
 
 ---
 
