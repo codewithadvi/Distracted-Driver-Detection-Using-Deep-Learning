@@ -240,8 +240,8 @@ t-SNE (t-Distributed Stochastic Neighbor Embedding) was used to visualize the hi
 | Vision Transformer (ViT) | 98.0%          | 98.0%              | 98.1%     | 98.0%  | 98.0%    |
 | Ensemble Model         | 93.0%            | 93.0%              | 93.2%     | 93.1%  | 93.1%    |
 
-# Benchmarkings to be added : Intel Xeon 8480+ Platinum Server Model, Single T4 GPU , Dual T4 GPU , P100 GPU, Single Ryzen 5 CPU ( Comparison of a SuperComputer Server vs GPU effects on Deep Learning, OpenVino Optimizations on CPU vs GPU benchmarking)
-# Cross Validation on External Dataset: AUC Distracted Driver Dataset / DMD: Distracted Driver Monitoring Dataset
+### Benchmarkings to be added : Intel Xeon 8480+ Platinum Server Model, Single T4 GPU , Dual T4 GPU , P100 GPU, Single Ryzen 5 CPU ( Comparison of a SuperComputer Server vs GPU effects on Deep Learning, OpenVino Optimizations on CPU vs GPU benchmarking)
+### Cross Validation on External Dataset: AUC Distracted Driver Dataset / DMD: Distracted Driver Monitoring Dataset
 ---
 
 ## Future Work
